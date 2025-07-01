@@ -4,7 +4,6 @@ export default async function handler(req, res) {
       method: "GET",
       headers: {
         "x-api-key": "fruit-api-challenge-2025",
-        Accept: "application/json",
       },
     });
 
