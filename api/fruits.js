@@ -1,14 +1,11 @@
 export default async function handler(req, res) {
   try {
     const response = await fetch("https://fruity-proxy.vercel.app/api/fruits", {
+      method: "GET",
       headers: {
         "x-api-key": "fruit-api-challenge-2025",
-        "User-Agent": "Mozilla/5.0",
-        Origin: "https://fruity-proxy.vercel.app",
       },
     });
-
-    console.log("response status", response.status);
 
     const data = await response.json();
 
