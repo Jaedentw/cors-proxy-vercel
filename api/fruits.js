@@ -1,6 +1,9 @@
 export default async function handler(req, res) {
   if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Allow-Origin", "*"); // Or your actual frontend URL
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://cors-proxy-vercel-jaedentws-projects.vercel.app/api/fruits"
+    ); // Or your actual frontend URL
     res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     return res.status(200).end(); // End early for preflight
@@ -24,7 +27,10 @@ export default async function handler(req, res) {
 
     console.log("data", data);
 
-    res.setHeader("Access-Control-Allow-Origin", "*"); // or restrict this to your GitHub Pages domain
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://cors-proxy-vercel-jaedentws-projects.vercel.app/api/fruits"
+    ); // or restrict this to your GitHub Pages domain
     res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
