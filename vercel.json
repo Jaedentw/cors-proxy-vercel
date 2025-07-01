@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  "builds": [{ "src": "api/fruits.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/api/fruits", "dest": "api/fruits.js" }]
 }
