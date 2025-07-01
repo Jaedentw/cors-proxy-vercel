@@ -7,6 +7,9 @@ export default async function handler(req, res) {
         Origin: "https://fruity-proxy.vercel.app",
       },
     });
+
+    console.log("response status", response.status);
+
     const data = await response.json();
 
     res.setHeader("Access-Control-Allow-Origin", "*"); // or your GitHub Pages domain
