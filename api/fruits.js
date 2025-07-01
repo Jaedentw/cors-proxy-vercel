@@ -1,16 +1,13 @@
 export default async function handler(req, res) {
   try {
-    const response = await fetch(
-      "https://webhook.site/341f3edd-3639-42c4-bb5c-3630e2c70c0f",
-      {
-        method: "GET",
-        headers: {
-          "x-api-key": "fruit-api-challenge-2025",
-          Origin: "https://jaedentw.github.io",
-          "User-Agent": "Mozilla/5.0",
-        },
-      }
-    );
+    const response = await fetch("https://fruity-proxy.vercel.app/api/fruits", {
+      method: "GET",
+      headers: {
+        "x-api-key": "fruit-api-challenge-2025",
+        Origin: "https://jaedentw.github.io",
+        "User-Agent": "Mozilla/5.0",
+      },
+    });
 
     const data = await response.json();
 
