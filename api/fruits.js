@@ -1,42 +1,31 @@
 export default async function handler(req, res) {
-  if (req.method === "OPTIONS") {
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://cors-proxy-vercel-jaedentws-projects.vercel.app/api/fruits"
-    ); // Or your actual frontend URL
-    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    return res.status(200).end(); // End early for preflight
-  }
+  const allowedOrigin = "https://jaedentws.github.io"; // <-- Update this if needed
 
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  console.log("REQ", req);
+  console.log("RES", res);
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
   try {
-    const response = await fetch("https://fruity-proxy.vercel.app/api/fruits", {
+    const response = await fetch("https://fruity-proxy.vercel.app/fruit/all", {
       method: "GET",
       headers: {
         "x-api-key": "fruit-api-challenge-2025",
       },
     });
-
-    console.log("response", response);
-
+    console.log("RESPONSE HERE", response);
     if (!response.ok) {
-      throw new Error("API request failed");
+      const errorText = await response.text();
+      console.error("API error:", errorText);
+      return res.status(500).json({ error: "Upstream API failed" });
     }
-
     const data = await response.json();
-
-    console.log("data", data);
-
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://cors-proxy-vercel-jaedentws-projects.vercel.app/api/fruits"
-    ); // or restrict this to your GitHub Pages domain
-    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-    res.status(200).json(data);
+    return res.status(200).json(data);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch data" });
+    console.error("Fetch error:", err);
+    return res.status(500).json({ error: "Something went wrong" });
   }
 }
