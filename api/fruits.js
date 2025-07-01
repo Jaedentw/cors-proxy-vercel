@@ -7,11 +7,15 @@ export default async function handler(req, res) {
       },
     });
 
+    console.log("response", response);
+
     if (!response.ok) {
       throw new Error("API request failed");
     }
 
     const data = await response.json();
+
+    console.log("data", data);
 
     res.setHeader("Access-Control-Allow-Origin", "*"); // or restrict this to your GitHub Pages domain
     res.setHeader("Access-Control-Allow-Methods", "GET");
