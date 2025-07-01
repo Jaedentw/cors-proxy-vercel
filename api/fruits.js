@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
   try {
-    const response = await fetch("https://fruity-proxy.vercel.app/fruits", {
+    const response = await fetch("https://fruity-proxy.vercel.app/api/fruits", {
       method: "GET",
       headers: {
         "x-api-key": "fruit-api-challenge-2025",
