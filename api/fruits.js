@@ -1,14 +1,4 @@
 export default async function handler(req, res) {
-  const allowedOrigin = "https://jaedentws.github.io"; // <-- Update this if needed
-
-  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  console.log("REQ", req);
-  console.log("RES", res);
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
   try {
     const response = await fetch("https://fruity-proxy.vercel.app/api/fruits", {
       method: "GET",
@@ -16,16 +6,22 @@ export default async function handler(req, res) {
         "x-api-key": "fruit-api-challenge-2025",
       },
     });
-    console.log("RESPONSE HERE", response);
+
+    console.log("response", response);
+
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("API error:", errorText);
-      return res.status(500).json({ error: "Upstream API failed" });
+      throw new Error("API request failed");
     }
+
     const data = await response.json();
-    return res.status(200).json(data);
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    res.status(200).json(data);
   } catch (err) {
-    console.error("Fetch error:", err);
-    return res.status(500).json({ error: "Something went wrong" });
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch data", err });
   }
 }
