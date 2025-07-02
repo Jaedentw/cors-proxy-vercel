@@ -7,6 +7,8 @@ export default async function handler(req, res) {
       },
     });
 
+    console.log("response", response);
+
     if (!response.ok) {
       throw new Error("API request failed");
     }
@@ -20,8 +22,6 @@ export default async function handler(req, res) {
     res.status(200).json(data);
   } catch (err) {
     console.error(err);
-    res
-      .status(500)
-      .json({ error: "Failed to fetch data. Response data:", response });
+    res.status(500).json({ error: "Failed to fetch data" });
   }
 }
